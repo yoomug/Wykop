@@ -1,3 +1,4 @@
+console.log('ASHER_LOADED');
 
 if(typeof(ASHER) == "object"){
 	ASHER.remove();
