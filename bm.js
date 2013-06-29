@@ -1,32 +1,40 @@
-// JavaScript Document
 
-
-
+if(typeof(ASHER) == "object"){
+	ASHER.remove();
+}
 
 var ASHER =(function(){
-  
-
+	
+var config = {
+	
+	elemClassName: "asher-wz",
+	dug:"wykopal",
+	buried:"zakopal",
+	dugAjax: "http://www.wykop.pl/ajax/link/dug/",
+	buriedAjax: "http://www.wykop.pl/ajax/link/buried/"
+	
+};
 	
 var wid = $('article').eq(0).attr('data-id');
 	
 var commentsE = $('#comments-list-entry .comment');
-	var wykop_elem = '<small class="small cac"> wykopał </small>';
-	var zakop_elem = '<small class="small cac"> zakopał </small>';
+
+
+	var wykop_elem = '<small class="small cac '+config.elemClassName+'"> '+config.dug+' </small>';
+	var zakop_elem = '<small class="small cac '+config.elemClassName+'"> '+config.buried+' </small>';
 	
 	
 	
 	//wykopali
 	$.ajax({
-  url: "http://www.wykop.pl/ajax/link/dug/"+wid
+  url: dugAjax+wid
 }).done(function ( data ) {
 
 var tab = $(data.html).find('li').find('.left45');
 var wykopali = [];
 for(var i=0;i<tab.length;i++){
 	wykopali.push($(tab[i]).text());
-	console.log($(tab[i]).text());
 }
-console.log('wykopali: '+wykopali.length);
  //---------------------------------
 	
 	for(var j=0;j<commentsE.length;j++){
@@ -40,7 +48,7 @@ console.log('wykopali: '+wykopali.length);
 });
 //zakopali
 	$.ajax({
-  url: "http://www.wykop.pl/ajax/link/buried/"+wid
+  url: buriedAjax+wid
 }).done(function ( data ) {
 
 var tab = $(data.html).find('.hvline');
@@ -48,7 +56,6 @@ var zakopali = [];
 for(var i=0;i<tab.length;i++){
 	zakopali.push($(tab[i]).text());
 }
-console.log('zakopali: '+zakopali.length);
  //---------------------------------
 	
 	for(var j=0;j<commentsE.length;j++){
@@ -62,7 +69,13 @@ console.log('zakopali: '+zakopali.length);
 });
 
 
+return {
 
+remove:function(){	
+	$('.'+config.elemClassName).remove();	
+}
+	
+};
 	
 	
 })();
