@@ -28,7 +28,7 @@ var commentsE = $('#comments-list-entry .comment');
 	
 	//wykopali
 	$.ajax({
-  url: dugAjax+wid
+  url: config.dugAjax+wid
 }).done(function ( data ) {
 
 var tab = $(data.html).find('li').find('.left45');
@@ -49,7 +49,7 @@ for(var i=0;i<tab.length;i++){
 });
 //zakopali
 	$.ajax({
-  url: buriedAjax+wid
+  url: config.buriedAjax+wid
 }).done(function ( data ) {
 
 var tab = $(data.html).find('.hvline');
