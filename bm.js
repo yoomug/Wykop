@@ -5,57 +5,52 @@ if(typeof(ASHER) == "object"){
 }
 
 var ASHER =(function(){
-	
 var config = {
 	
 	elemClassName: "asher-wz",
-	dug:"wykopal",
-	buried:"zakopal",
+	dug:"wykopał",
+	buried:"zakopał",
 	dugAjax: "http://www.wykop.pl/ajax/link/dug/",
 	buriedAjax: "http://www.wykop.pl/ajax/link/buried/"
 	
-};
-	
-var wid = $('article').eq(0).attr('data-id');
-	
+};	
+var wid = $('article').eq(0).attr('data-id');	
 var commentsE = $('#comments-list-entry .comment');
-
-
-	var wykop_elem = '<small class="small cac '+config.elemClassName+'"> '+config.dug+' </small>';
-	var zakop_elem = '<small class="small cac '+config.elemClassName+'"> '+config.buried+' </small>';
+var dug_elem = '<small class="small cac '+config.elemClassName+'">'+config.dug+'</small>';
+var buried_elem = '<small class="small cac '+config.elemClassName+'">'+config.buried+'</small>';
 	
-	
-	
-	//wykopali
+//whodug
 	$.ajax({
+		dataType: "json",
   url: config.dugAjax+wid
 }).done(function ( data ) {
 
 var tab = $(data.html).find('li').find('.left45');
-var wykopali = [];
+var whodug = [];
 for(var i=0;i<tab.length;i++){
-	wykopali.push($(tab[i]).text());
+	whodug.push($(tab[i]).text());
 }
  //---------------------------------
 	
 	for(var j=0;j<commentsE.length;j++){
 		var current = $(commentsE[j]);
 		var name = current.find('a .fbold').text();
-
-		if($.inArray(name, wykopali) !== -1){
-			$(wykop_elem).insertBefore(current.find('.votes'));
+		if($.inArray(name, whodug) !== -1){
+			$(dug_elem).insertBefore(current.find('.votes'));
 		}
 	}   
 });
-//zakopali
-	$.ajax({
-  url: config.buriedAjax+wid
-}).done(function ( data ) {
+//whoburied
+$.ajax({
+  url: config.buriedAjax+wid,
+  dataType: "json"
+})
+.done(function ( data ) {
 
 var tab = $(data.html).find('.hvline');
-var zakopali = [];
+var whoburied = [];
 for(var i=0;i<tab.length;i++){
-	zakopali.push($(tab[i]).text());
+	whoburied.push($(tab[i]).text());
 }
  //---------------------------------
 	
@@ -63,8 +58,8 @@ for(var i=0;i<tab.length;i++){
 		var current = $(commentsE[j]);
 		var name = current.find('a .fbold').text();
 		
-		if($.inArray(name, zakopali) !== -1){
-			$(zakop_elem).insertBefore(current.find('.votes'));
+		if($.inArray(name, whoburied) !== -1){
+			$(buried_elem).insertBefore(current.find('.votes'));
 		}
 	}   
 });
