@@ -1,7 +1,7 @@
 Wykop
 =====
 
-Bookmarklet. Dug/Bury Informer of wykop.pl.
+Bookmarklet. Dug/Bury Informer for wykop.pl.
 
 More Info:
 
